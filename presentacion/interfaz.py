@@ -1,7 +1,34 @@
 """Capa de presentación: interfaz gráfica con Gradio."""
 import gradio as gr
 
-from datos.datos_ejemplo import NIT_HUELLITAS, NIT_PATITAS
+from datos.datos_ejemplo import DatosEjemplo, NIT_HUELLITAS, NIT_PATITAS
+
+
+def _nombre_corto(nombre_clinica: str) -> str:
+    return nombre_clinica.replace("Clínica Veterinaria ", "")
+
+
+def _pesos(valor: float) -> str:
+    return "$" + f"{valor:,.0f}".replace(",", ".")
+
+
+def _veterinarios_ejemplo() -> dict:
+    """Etiqueta del desplegable -> (NIT, cédula, nombre, tarjeta), tomado de DatosEjemplo."""
+    opciones = {}
+    for nit, clinica in DatosEjemplo.CLINICAS.items():
+        for cedula, nombre, tarjeta in clinica["veterinarios"]:
+            opciones[f"{_nombre_corto(clinica['datos'][0])} · {nombre}"] = (nit, cedula, nombre, tarjeta)
+    return opciones
+
+
+def _servicios_ejemplo() -> dict:
+    """Etiqueta del desplegable -> (NIT, código, nombre, tarifa), tomado de DatosEjemplo."""
+    opciones = {}
+    for nit, clinica in DatosEjemplo.CLINICAS.items():
+        for codigo, nombre, tarifa in clinica["servicios"]:
+            etiqueta = f"{_nombre_corto(clinica['datos'][0])} · {codigo} · {nombre} · {_pesos(tarifa)}"
+            opciones[etiqueta] = (nit, codigo, nombre, tarifa)
+    return opciones
 
 
 def construir_interfaz(presentacion) -> gr.Blocks:
@@ -42,6 +69,9 @@ def construir_interfaz(presentacion) -> gr.Blocks:
             # -------------------------------------------------------- 2. vet / servicio
             with gr.Tab("2. Registrar Vet / Servicio"):
                 gr.Markdown("### Registrar Veterinario")
+                vets_ejemplo = _veterinarios_ejemplo()
+                sel_vet = gr.Dropdown(choices=list(vets_ejemplo), value=None,
+                                      label="Veterinario de ejemplo (rellena los campos)")
                 nit_v = gr.Textbox(label="NIT Clínica")
                 ced_v = gr.Textbox(label="Cédula Veterinario")
                 nom_v = gr.Textbox(label="Nombre Completo")
@@ -49,9 +79,14 @@ def construir_interfaz(presentacion) -> gr.Blocks:
                 btn_v = gr.Button("Registrar Veterinario", variant="primary")
                 out_v = gr.Textbox(label="Resultado", lines=3)
                 btn_v.click(presentacion.registrar_veterinario, inputs=[nit_v, ced_v, nom_v, tp_v], outputs=out_v)
+                sel_vet.change(fn=lambda e: vets_ejemplo.get(e, (gr.skip(),) * 4),
+                               inputs=sel_vet, outputs=[nit_v, ced_v, nom_v, tp_v])
 
                 gr.Markdown("---")
                 gr.Markdown("### Registrar Servicio")
+                servs_ejemplo = _servicios_ejemplo()
+                sel_serv = gr.Dropdown(choices=list(servs_ejemplo), value=None,
+                                       label="Servicio de ejemplo (rellena los campos)")
                 nit_s = gr.Textbox(label="NIT Clínica")
                 cod_s = gr.Textbox(label="Código Servicio (ej. CG, VAC)")
                 nom_s = gr.Textbox(label="Nombre Servicio")
@@ -59,6 +94,8 @@ def construir_interfaz(presentacion) -> gr.Blocks:
                 btn_s = gr.Button("Registrar Servicio", variant="primary")
                 out_s = gr.Textbox(label="Resultado", lines=3)
                 btn_s.click(presentacion.registrar_servicio, inputs=[nit_s, cod_s, nom_s, tar_s], outputs=out_s)
+                sel_serv.change(fn=lambda e: servs_ejemplo.get(e, (gr.skip(),) * 4),
+                                inputs=sel_serv, outputs=[nit_s, cod_s, nom_s, tar_s])
 
             # -------------------------------------------------------- 3. propietario / mascota
             with gr.Tab("3. Registrar Propietario / Mascota"):
