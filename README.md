@@ -97,7 +97,7 @@ El servidor local se iniciará y la aplicación estará disponible en la consola
 
 El video explicativo del diseño, recorrido del código y ejecución en vivo de los casos de prueba se encuentra disponible en el siguiente enlace:
 
-- **Enlace al video:** ![Onedrive](https://mailudesedu-my.sharepoint.com/:v:/g/personal/01251151002_mail_udes_edu_co/IQD-aDWtTNt7T5QJpoWKgrVnAYifeBzl_jIonlsbTGvo2i0?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=n707ye)
+- **Enlace al video:** https://mailudesedu-my.sharepoint.com/:v:/g/personal/01251151002_mail_udes_edu_co/IQD-aDWtTNt7T5QJpoWKgrVnAYifeBzl_jIonlsbTGvo2i0?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=n707ye
 
 ---
 
